@@ -60,6 +60,7 @@ public class MainFrame extends JFrame implements ActionListener {
 								.getSelectedValue()));
 						updateAantal();
 						b2.setEnabled(true);;
+						geefDoor();
 					}
 					if (list.getSelectedValue() == null) {
 						b2.setEnabled(false);
@@ -68,13 +69,6 @@ public class MainFrame extends JFrame implements ActionListener {
 				}
 			}
 		});
-		Timer timer = new Timer();
-		timer.scheduleAtFixedRate(new TimerTask() {
-			  @Override
-			  public void run() {
-			    updateAantal();
-			  }
-			}, 2000, 2000);
 
 		add(lab1, BorderLayout.NORTH);
 		lowerPane.add(lab2, BorderLayout.NORTH);
@@ -181,4 +175,9 @@ public class MainFrame extends JFrame implements ActionListener {
 			lab2.setText(" Sponsorgeld: " + geld);
 		}
 	}
+	
+	public void geefDoor() {
+		lf.ontvang(this);
+	}
+	
 }

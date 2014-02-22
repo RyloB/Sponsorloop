@@ -24,8 +24,8 @@ public class SponsorFrame extends JFrame implements ActionListener {
 	private JLabel lab1, lab2;
 	private Sponsorloop loop;
 	private Loper loper;
-	private SponsorFrame sf;
 	private JPanel labelPane, lowerPane, buttonPane;
+	private MainFrame mf;
 
 	public SponsorFrame(Loper loper) {
 		this.loper = loper;
@@ -54,9 +54,6 @@ public class SponsorFrame extends JFrame implements ActionListener {
 			@Override
 			public void valueChanged(ListSelectionEvent arg0) {
 				if (!arg0.getValueIsAdjusting()) {
-					if (sf != null) {
-						sf.dispose();
-					}
 					if (list.getSelectedValue() != null) {
 						b2.setEnabled(true);
 						b3.setEnabled(true);
@@ -108,11 +105,14 @@ public class SponsorFrame extends JFrame implements ActionListener {
 		if (e.getSource() == b1) {
 			String naam = "";
 			while (true) {
+			while (true) {
 				naam = JOptionPane.showInputDialog(null,
 						"Voer sponsor naam in: ", "Naam invoeren",
 						JOptionPane.PLAIN_MESSAGE);
-					
-				if (naam == null || naam.length() < 2) {
+				if (naam == null) {
+					break;
+				}
+				if (naam.equals("") || naam.length() < 2) {
 					JOptionPane.showMessageDialog(null,
 							"Voer een correcte naam in.", "Fout",
 							JOptionPane.INFORMATION_MESSAGE);
@@ -120,14 +120,19 @@ public class SponsorFrame extends JFrame implements ActionListener {
 					break;
 				}
 			}
-
+			if (naam == null) {
+				break;
+			}
 			
 			String criterium = "";
 			while (true) {
 				criterium = JOptionPane.showInputDialog(null,
 						"Voer criterium in: ", "Criterium invoeren",
 						JOptionPane.PLAIN_MESSAGE);
-				if (criterium == null || criterium.length() < 2) {
+				if (criterium == null) {
+					break;
+				}
+				if (criterium.equals("") || criterium.length() < 2) {
 					JOptionPane.showMessageDialog(null,
 							"Voer een correct criterium in.", "Fout",
 							JOptionPane.INFORMATION_MESSAGE);
@@ -135,13 +140,19 @@ public class SponsorFrame extends JFrame implements ActionListener {
 					break;
 				}
 			}
+			if (criterium == null) {
+				break;
+			}
 			String s = "";
 			double bedrag = 0;
 			while (true) {
 				s = JOptionPane.showInputDialog(null, "Voer bedrag in: ",
 						"Bedrag invoeren", JOptionPane.PLAIN_MESSAGE);
-
-				if (s == null || s.length() < 1 || !s.matches("[0-9.]+")
+				if (s == null) {
+					break;
+				}
+				
+				if (s.equals("") || s.length() < 1 || !s.matches("[0-9.]+")
 						|| s.matches("[.]+")) {
 					JOptionPane
 							.showMessageDialog(
@@ -153,10 +164,16 @@ public class SponsorFrame extends JFrame implements ActionListener {
 					break;
 				}
 			}
+			if (s == null) {
+				break;
+			}
 
 			listModel.addElement(naam);
 			loper.voegSponsorToe(naam, criterium, bedrag);
 			updateAantal();
+			mf.updateAantal();
+			break;
+			}
 
 		}
 		if (e.getSource() == b2) {
@@ -177,6 +194,7 @@ public class SponsorFrame extends JFrame implements ActionListener {
 						listModel.removeElementAt(selectedIndex);
 						loper.verwijderSponsor(naam);
 						updateAantal();
+						mf.updateAantal();
 					}
 				}
 			}
@@ -190,6 +208,10 @@ public class SponsorFrame extends JFrame implements ActionListener {
 		bd = bd.setScale(decimalPlaces, BigDecimal.ROUND_HALF_UP);
 		geld = bd.doubleValue();
 		lab2.setText(" Totaal sponsorgeld: " + geld);
+	}
+	
+	public void ontvang(MainFrame mf) {
+		this.mf = mf;
 	}
 
 }

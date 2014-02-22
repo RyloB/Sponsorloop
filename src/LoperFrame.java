@@ -25,6 +25,7 @@ public class LoperFrame extends JFrame implements ActionListener {
 	private JLabel lab1, lab2, lab3;
 	private SponsorFrame sf;
 	private Sponsorloop loop;
+	private MainFrame mf;
 
 	public LoperFrame(final Sponsorloop loop) {
 		this.loop = loop;
@@ -57,6 +58,7 @@ public class LoperFrame extends JFrame implements ActionListener {
 						sf = new SponsorFrame(loop.getLoper(getLoper()));
 						updateAantal();
 						b2.setEnabled(true);
+						geefDoor();
 					}
 					if (list.getSelectedValue() == null) {
 						b2.setEnabled(false);
@@ -147,6 +149,14 @@ public class LoperFrame extends JFrame implements ActionListener {
 
 	public JFrame getSf() {
 		return sf;
+	}
+	
+	public void ontvang(MainFrame mf) {
+		this.mf = mf;
+	}
+	
+	public void geefDoor() {
+		sf.ontvang(mf);
 	}
 
 }
