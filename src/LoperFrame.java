@@ -38,7 +38,7 @@ public class LoperFrame extends JFrame implements ActionListener {
 		listModel = new DefaultListModel();
 		list = new JList(listModel);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list.setSelectedIndex(0);
+		deselect();
 		list.setVisibleRowCount(5);
 		b1 = new JButton("Nieuwe Loper");
 		b2 = new JButton("Verwijder Loper");
@@ -89,6 +89,7 @@ public class LoperFrame extends JFrame implements ActionListener {
 
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
+				mf.deselect();
 				if (sf != null) {
 					sf.dispose();
 				}
@@ -157,6 +158,10 @@ public class LoperFrame extends JFrame implements ActionListener {
 	
 	public void geefDoor() {
 		sf.ontvang(mf);
+	}
+	
+	public void deselect() {
+		list.clearSelection();
 	}
 
 }

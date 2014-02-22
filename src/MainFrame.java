@@ -35,7 +35,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		listModel = new DefaultListModel();
 		list = new JList(listModel);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list.setSelectedIndex(0);
+		deselect();
 		list.setVisibleRowCount(5);
 		b1 = new JButton("Nieuwe Sponsorloop");
 		b2 = new JButton("Verwijder Sponsorloop");
@@ -69,7 +69,7 @@ public class MainFrame extends JFrame implements ActionListener {
 				}
 			}
 		});
-
+		
 		add(lab1, BorderLayout.NORTH);
 		lowerPane.add(lab2, BorderLayout.NORTH);
 		lowerPane.add(b1, BorderLayout.CENTER);
@@ -178,6 +178,10 @@ public class MainFrame extends JFrame implements ActionListener {
 	
 	public void geefDoor() {
 		lf.ontvang(this);
+	}
+	
+	public void deselect() {
+		list.clearSelection();
 	}
 	
 }

@@ -3,6 +3,8 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.math.BigDecimal;
 
 import javax.swing.DefaultListModel;
@@ -89,6 +91,12 @@ public class SponsorFrame extends JFrame implements ActionListener {
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(650, dim.height / 2 - this.getSize().height / 2);
 		setVisible(true);
+		
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				mf.lf.deselect();
+			}
+		});
 	}
 
 	@Override
